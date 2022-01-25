@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       validate:{
         isDate:true
       }
-      }
+    }
   }, {
     sequelize,
     modelName: 'Task',

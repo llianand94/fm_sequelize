@@ -40,10 +40,10 @@ module.exports.updateUser = async (req,res, next) =>{
 
 module.exports.updateUserInstanse = async (req,res, next) =>{
   try{
-    const {body, params: {id}} = req; 
-    const userInstance = await User.findByPk(id);
+    const {body, userInstance} = req;    
     const updatedUser = await userInstance.update(body,
-      {returning: true
+      {
+        returning: true
     });
     updatedUser.password = undefined;
     res.status(200).send({data:updatedUser});
