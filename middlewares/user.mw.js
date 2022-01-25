@@ -5,7 +5,7 @@ module.exports.checkUser = async (req,res,next)=>{
     const {params:{id}} = req;
     const userInstance = await User.findByPk(id);
     if(!userInstance){
-      throw new Error('User by id '+ id + ' not found');
+      throw new Error('User by id '+ id + ' was not found');
     }
     // console.log(userInstance);
     req.userInstance = userInstance;
