@@ -51,3 +51,13 @@ module.exports.updateUserInstanse = async (req,res, next) =>{
     next(err);
   }
 }
+
+module.exports.deleteUser = async (req, res, next) => {
+  try{
+    const {body,userInstance, params:{id}} = req;
+    const deletedUser = await userInstance.destroy();
+    res.status(200).send({data:deletedUser});
+  }catch(err){
+    next(err);
+  }
+}

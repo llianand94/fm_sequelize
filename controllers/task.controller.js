@@ -21,3 +21,11 @@ module.exports.getUserTasks = async (req,res,next)=>{
     next(err);
   }
 }
+
+module.exports.updateUserTask = async (req, res, next) => {
+  try{
+    const {body, userInstance, params:{id}} = req;
+  }catch(err){
+    next(err);
+  }
+}
