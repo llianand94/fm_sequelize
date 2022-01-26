@@ -26,9 +26,9 @@ module.exports.getAllUsers = async (req,res, next) =>{
 }
 module.exports.updateUser = async (req,res, next) =>{
   try{
-    const {body, params: {id}} = req; 
+    const {body, params: {userId}} = req; 
     const [row,[updatedUser]] = await User.update(body,{
-      where : {id},
+      where : {id : userId},
       returning: true
     });
     updatedUser.password = undefined;
