@@ -1,12 +1,10 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const {Model} = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Group extends Model {
-    
     static associate(models) {
-      Grop.belongsToMany(models.User,{
+      Group.belongsToMany(models.User,{
         through: 'user_to_group',
         foreignKey : 'userId'
       });

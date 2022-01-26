@@ -37,9 +37,9 @@ module.exports.getAllUsers = async (req,res, next) =>{
     const {pagination={}} = req;
     const results = await User.findAll(
       {        
-      where: {
-      // firstName: 'Pew'
-    },
+    //   where: {
+    //   firstName: 'Pew'
+    // },
       attributes: {
          exclude : ['password']
         },
@@ -80,9 +80,12 @@ module.exports.updateUserInstanse = async (req,res, next) =>{
 
 module.exports.deleteUser = async (req, res, next) => {
   try{
-    const {body,userInstance, params:{id}} = req;
-    const deletedUser = await userInstance.destroy();
-    res.status(200).send({data:deletedUser});
+    const {body,userInstance, params:{userId}} = req; 
+    if(!userInstance){
+      throw new Error('404 User by '+ userId + ' was not Found');
+    }   
+    const numOfRemovedRows = await User.destroy({where:{id:userId}});
+    res.status(200).send({data:numOfRemovedRows});
   }catch(err){
     next(err);
   }

@@ -23,8 +23,13 @@ module.exports.getUserTasks = async (req,res,next)=>{
 
 module.exports.updateUserTask = async (req, res, next) => {
   try{
-    const {body, userInstance, params:{id}} = req;
-  }catch(err){
+    const {body, taskInstance, params:{taskId}} = req;
+    const [row,[updatedTask]] = await Task.update(body,{
+      where : {id : taskId},
+      returning: true
+    });
+    res.status(200).send({data:updatedUser});
+}catch(err){
     next(err);
   }
 }

@@ -1,6 +1,7 @@
 'use strict';
 const {Model} = require('sequelize');
 const {isBefore} = require('date-fns');
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model { 
     static associate(models) {
