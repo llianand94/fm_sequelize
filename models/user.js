@@ -2,15 +2,14 @@
 const {Model} = require('sequelize');
 const {isBefore} = require('date-fns');
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model { ///User  Users => users
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+  class User extends Model { 
     static associate(models) {
       User.hasMany(models.Task,{
         foreignKey: 'userId'
+      });
+      User.belongsToMany(models.Group, {
+        through: 'user_to_group',
+        foreignKey : 'groupId'
       });
       // define association here
     }

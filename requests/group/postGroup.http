@@ -1,0 +1,11 @@
+POST http://localhost:3000/api/groups HTTP/1.1
+Content-Type: application/json
+
+{
+  "name":"gr1",
+  "imagePath":"i",
+  "email":"yoi10@gmail.com",
+  "password":"Elon123456",
+  "birthday":"1971-7-28",
+  "isMale":true
+}
