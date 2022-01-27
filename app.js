@@ -10,7 +10,7 @@ app.use('/api', router);
 app.use((err,req,res,next)=>{
   const statusError = err.status || 500;
   res.status(statusError).send({
-    errors: [{message: err || 'Internal Server Error'}]
+    errors: [{message: err.message || 'Internal Server Error'}]
   })
 });
 

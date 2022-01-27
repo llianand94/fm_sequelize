@@ -3,9 +3,5 @@ Content-Type: application/json
 
 {
   "name":"gr1",
-  "imagePath":"i",
-  "email":"yoi10@gmail.com",
-  "password":"Elon123456",
-  "birthday":"1971-7-28",
-  "isMale":true
+  "userId":82
 }
