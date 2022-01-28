@@ -1,17 +1,12 @@
 const express = require('express');
 const router = require('./routes');
-
+const {errorHandler} = require('./middlewares/errorHandler.mw');
 const app = express();
-app.use(express.json());
 
+app.use(express.static('public'));
+app.use(express.json());
 app.use('/api', router);
 
-
-app.use((err,req,res,next)=>{
-  const statusError = err.status || 500;
-  res.status(statusError).send({
-    errors: [{message: err.message || 'Internal Server Error'}]
-  })
-});
+app.use(errorHandler);
 
 module.exports = app;
