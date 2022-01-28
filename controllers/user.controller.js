@@ -34,7 +34,7 @@ module.exports.getUser = async (req,res,next)=>{
 
 module.exports.getAllUsers = async (req,res, next) =>{
   try{
-    const {pagination={}} = req;
+    const {pagination} = req;
     const results = await User.findAll(
       {        
     //   where: {

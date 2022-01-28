@@ -17,11 +17,12 @@ const storage = multer.diskStorage({
   }
 })
 
-const upload = multer({ storage })
+const upload = multer({ storage });
+
+groupRouter.get('/:userId', GroupController.getUsersGroup);
 
 groupRouter.post('/', GroupController.createGroupByUser);
-groupRouter.get('/:userId', GroupController.getUsersGroup);
-groupRouter.post('/:groupId/image',upload.single('image'), GroupController.createGroupImage);
-
+groupRouter.post('/:groupId/image', upload.single('image'), GroupController.createGroupImage);
+groupRouter.post('/:groupId', GroupController.addUserToGroup)
 
 module.exports = groupRouter;
