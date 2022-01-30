@@ -1,5 +1,5 @@
 const {Group, User} = require ('../models');
-const createError = require('http-error');
+const createError = require('http-errors');
 const _ = require('lodash');
 
 module.exports.createGroupByUser = async (req, res, next ) => {

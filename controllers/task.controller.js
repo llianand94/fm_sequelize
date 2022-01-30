@@ -33,3 +33,18 @@ module.exports.updateUserTask = async (req, res, next) => {
     next(err);
   }
 }
+module.exports.deleteTaskByPk = async (req, res,next) => {
+  try{
+    const {params:{taskId}} = req;
+    const rows = await Task.destroy({
+      where: {
+        id:taskId
+        }});    
+    if(!rows){
+      return next(createError(404, 'Task by id' + taskId + ' was not found'))
+    }
+    res.status(200).send({data:rows});
+  }catch(err){
+    next(err);
+  }
+}
