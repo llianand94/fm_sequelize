@@ -2,7 +2,8 @@
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('users_to_groups', { id: {
+    await queryInterface.createTable('users_to_groups', { 
+    id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,

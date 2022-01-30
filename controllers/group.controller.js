@@ -87,3 +87,19 @@ module.exports.addUserToGroup = async (req,res, next) =>{
   }catch(err){
     next(err)};
 }
+module.exports.deleteUserFromGroup = async (req,res,next)=>{
+  try{
+    const {userInstance, params:{groupId}} = req;
+    const group = await Group.findByPk(groupId);
+    const result = await group.removeUser(userInstance);
+    if(!group){
+      return next(createError(404, 'Group was not found'));
+    }else if(!result){
+      return next(createError(404, 'Group with this user was not found!'))
+    }
+    console.log(result);
+    res.status(200).send({data:result});
+  }catch(err){
+    next(err);
+  }
+}

@@ -2,6 +2,8 @@ const {Router} = require('express');
 const multer = require('multer');
 const path = require('path');
 const GroupController = require('../controllers/group.controller');
+const { checkUser } = require('../middlewares/user.mw');
+
 const groupRouter = Router();
 
 // const upload = multer({
@@ -23,6 +25,8 @@ groupRouter.get('/:userId', GroupController.getUsersGroup);
 
 groupRouter.post('/', GroupController.createGroupByUser);
 groupRouter.post('/:groupId/image', upload.single('image'), GroupController.createGroupImage);
-groupRouter.post('/:groupId', GroupController.addUserToGroup)
+groupRouter.post('/:groupId', GroupController.addUserToGroup);
+//
+groupRouter.delete('/:groupId/users/:userId', checkUser, GroupController.deleteUserFromGroup);
 
 module.exports = groupRouter;
