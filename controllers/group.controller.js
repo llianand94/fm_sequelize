@@ -62,16 +62,15 @@ module.exports.createGroupImage = async (req,res,next) => {
 }
 module.exports.addUserToGroup = async (req,res, next) =>{
   try{
-    const {body:{userId},params:{groupId} } = req;
-    const group = await Group.findByPk(groupId);
-    if(!group){
-      return next(createError(404, "Group not found"));
-    }
+    const {groupInstance, body:{userId},
+    // params:{groupId} 
+  } = req;
+    
     const user = await User.findByPk(userId);
     if(!user){
       return next(createError(404, "User not found"));
     }
-    await group.addUser(user);
+    await groupInstance.addUser(user);
     const groupWithUsers = await Group.findByPk(groupId, {
       include:[{
         model:User,
@@ -89,17 +88,33 @@ module.exports.addUserToGroup = async (req,res, next) =>{
 }
 module.exports.deleteUserFromGroup = async (req,res,next)=>{
   try{
-    const {userInstance, params:{groupId}} = req;
-    const group = await Group.findByPk(groupId);
-    const result = await group.removeUser(userInstance);
-    if(!group){
-      return next(createError(404, 'Group was not found'));
-    }else if(!result){
+    const {userInstance, groupInstance,
+      //  params:{groupId}
+      } = req;   
+    const result = await groupInstance.removeUser(userInstance);
+    if(!result){
       return next(createError(404, 'Group with this user was not found!'))
-    }
-    console.log(result);
+    }    
     res.status(200).send({data:result});
   }catch(err){
     next(err);
+  }
+}
+module.exports.updateGroup = async (req,res,next)=>{
+  try{
+    const {groupInstance, body} = req;
+    const updatedGroup = await groupInstance.update({
+      key:{body}
+    },{
+      fields:['description','name'],
+      returning:true
+    })
+    if(!updatedGroup){
+      return next(createError())
+    }
+    //if answer without body status(204)
+    res.status(200).send({data:updatedGroup})
+  }catch(error){
+    next(error);
   }
 }

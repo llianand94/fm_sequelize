@@ -3,6 +3,8 @@ const multer = require('multer');
 const path = require('path');
 const GroupController = require('../controllers/group.controller');
 const { checkUser } = require('../middlewares/user.mw');
+const { checkGroup } = require('../middlewares/group.mw');
+
 
 const groupRouter = Router();
 
@@ -13,8 +15,7 @@ const storage = multer.diskStorage({
   destination:  (req, file, cb) =>{
     cb(null, path.resolve(__dirname, '../public/images'))
   },
-  filename: (req, file, cb) => {
-    // const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+  filename: (req, file, cb) => { 
     cb(null, Date.now()+ '-' +  file.originalname  )
   }
 })
@@ -25,8 +26,9 @@ groupRouter.get('/:userId', GroupController.getUsersGroup);
 
 groupRouter.post('/', GroupController.createGroupByUser);
 groupRouter.post('/:groupId/image', upload.single('image'), GroupController.createGroupImage);
-groupRouter.post('/:groupId', GroupController.addUserToGroup);
+groupRouter.post('/:groupId', checkGroup, GroupController.addUserToGroup);
 //
-groupRouter.delete('/:groupId/users/:userId', checkUser, GroupController.deleteUserFromGroup);
+groupRouter.delete('/:groupId/users/:userId', checkUser, checkGroup,GroupController.deleteUserFromGroup);
+groupRouter.patch('/:groupId', checkGroup, GroupController.updateGroup )
 
 module.exports = groupRouter;
