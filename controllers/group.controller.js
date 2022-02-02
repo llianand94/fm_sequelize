@@ -1,6 +1,6 @@
-const {Group, User} = require ('../models');
 const createError = require('http-errors');
 const _ = require('lodash');
+const {Group, User} = require ('../models');
 
 module.exports.createGroupByUser = async (req, res, next ) => {
   try{
@@ -62,9 +62,7 @@ module.exports.createGroupImage = async (req,res,next) => {
 }
 module.exports.addUserToGroup = async (req,res, next) =>{
   try{
-    const {groupInstance, body:{userId},
-    // params:{groupId} 
-  } = req;
+    const {groupInstance, body:{userId},params:{groupId}} = req;
     
     const user = await User.findByPk(userId);
     if(!user){
@@ -81,20 +79,19 @@ module.exports.addUserToGroup = async (req,res, next) =>{
           attributes:[]
         }
       }]
-    });
+    });   
     res.status(201).send({data: groupWithUsers});
   }catch(err){
-    next(err)};
+    next(err)
+  };
 }
 module.exports.deleteUserFromGroup = async (req,res,next)=>{
   try{
-    const {userInstance, groupInstance,
-      //  params:{groupId}
-      } = req;   
+    const {userInstance, groupInstance} = req;   
     const result = await groupInstance.removeUser(userInstance);
     if(!result){
-      return next(createError(404, 'Group with this user was not found!'))
-    }    
+      return next(createError(404, 'Group with this user was not found!'));
+    };
     res.status(200).send({data:result});
   }catch(err){
     next(err);
@@ -103,17 +100,17 @@ module.exports.deleteUserFromGroup = async (req,res,next)=>{
 module.exports.updateGroup = async (req,res,next)=>{
   try{
     const {groupInstance, body} = req;
-    const updatedGroup = await groupInstance.update({
-      key:{body}
-    },{
-      fields:['description','name'],
-      returning:true
-    })
+    const updatedGroup = await groupInstance.update(
+      body
+      ,{
+        fields:["description","name"],
+        returning:true
+      });
     if(!updatedGroup){
-      return next(createError())
-    }
+      return next(createError(404, 'Could not update group'));
+    };
     //if answer without body status(204)
-    res.status(200).send({data:updatedGroup})
+    res.status(200).send({data:updatedGroup});
   }catch(error){
     next(error);
   }

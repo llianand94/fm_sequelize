@@ -1,6 +1,6 @@
 const {Group} = require('../models');
 
-module.exports.checkTask = async (req,res,next)=>{
+module.exports.checkGroup = async (req,res,next)=>{
   try{
     const {params:{groupId}} = req;
     const groupInstance = await Group.findByPk(groupId);

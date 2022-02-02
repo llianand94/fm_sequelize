@@ -1,2 +1,2 @@
-DELETE http://localhost:3000/api/groups/1/users/130 HTTP/1.1
+DELETE http://localhost:3000/api/groups/1/users/131 HTTP/1.1
 

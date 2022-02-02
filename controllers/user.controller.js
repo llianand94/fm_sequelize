@@ -36,10 +36,7 @@ module.exports.getAllUsers = async (req,res, next) =>{
   try{
     const {pagination} = req;
     const results = await User.findAll(
-      {        
-    //   where: {
-    //   firstName: 'Pew'
-    // },
+      {  
       attributes: {
          exclude : ['password']
         },
