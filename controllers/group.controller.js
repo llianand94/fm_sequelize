@@ -21,6 +21,18 @@ module.exports.createGroupByUser = async (req, res, next ) => {
     next(err);
   }
 };
+module.exports.getAllGroups = async (req, res, next) =>{
+  try{
+    const {pagination} = req;
+    const groups = await Group.findAll({...pagination});
+    if(!groups){
+      return next(createError(404, 'Groups were not found'));
+      }
+    res.status(200).send({data:groups});
+  }catch(error){
+    next(error);
+  }
+};
 module.exports.getUsersGroup = async (req,res,next) => {
   try{
     const {params:{userId}} = req;

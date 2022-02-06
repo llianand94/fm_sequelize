@@ -4,6 +4,7 @@ const path = require('path');
 const GroupController = require('../controllers/group.controller');
 const { checkUser } = require('../middlewares/user.mw');
 const { checkGroup } = require('../middlewares/group.mw');
+const paginationMw = require('../middlewares/pagination.mw');
 
 
 const groupRouter = Router();
@@ -22,6 +23,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+groupRouter.get('/', paginationMw, GroupController.getAllGroups);
 groupRouter.get('/:userId', GroupController.getUsersGroup);
 
 groupRouter.post('/', GroupController.createGroupByUser);
