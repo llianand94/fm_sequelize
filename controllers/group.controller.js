@@ -21,6 +21,17 @@ module.exports.createGroupByUser = async (req, res, next ) => {
     next(err);
   }
 };
+module.exports.getAllGroups = async (req,res,next) => {
+  try{
+    const allGroups = await Group.findAll();
+    if(!allGroups){
+      return next(createError(404, 'Groups not found'));
+      }
+    res.status(200).send({data:allGroups});  
+  }catch(err){
+    next(err);
+  }
+}
 module.exports.getUsersGroup = async (req,res,next) => {
   try{
     const {params:{userId}} = req;
@@ -43,6 +54,7 @@ module.exports.getUsersGroup = async (req,res,next) => {
     next(err);
   }
 }
+
 module.exports.createGroupImage = async (req,res,next) => {
   try{
     const {file:{filename}, params:{groupId}}= req;

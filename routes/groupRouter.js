@@ -22,7 +22,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-groupRouter.get('/:userId', GroupController.getUsersGroup);
+groupRouter.get('/users:userId', GroupController.getUsersGroup);
+groupRouter.get('/', GroupController.getAllGroups);
 
 groupRouter.post('/', GroupController.createGroupByUser);
 groupRouter.post('/:groupId/image', upload.single('image'), GroupController.createGroupImage);
