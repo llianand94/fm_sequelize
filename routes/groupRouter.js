@@ -2,8 +2,8 @@ const {Router} = require('express');
 const multer = require('multer');
 const path = require('path');
 const GroupController = require('../controllers/group.controller');
-const { checkUser } = require('../middlewares/user.mw');
-const { checkGroup } = require('../middlewares/group.mw');
+const { checkUser } = require('../middlewares/checkUser.mw');
+const { checkGroup } = require('../middlewares/checkGroup.mw');
 const paginationMw = require('../middlewares/pagination.mw');
 
 
@@ -24,7 +24,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 groupRouter.get('/', paginationMw, GroupController.getAllGroups);
-groupRouter.get('/:userId', GroupController.getUsersGroup);
+groupRouter.get('/users/:userId', checkUser, GroupController.getUserGroups);
+groupRouter.get('/:groupId/users', checkGroup, GroupController.getUsersInGroup);
 
 
 groupRouter.post('/', GroupController.createGroupByUser);

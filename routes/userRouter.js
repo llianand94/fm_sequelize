@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const UserController = require('../controllers/user.controller');
 const paginationMw = require('../middlewares/pagination.mw');
-const { checkUser } = require('../middlewares/user.mw');
+const { checkUser } = require('../middlewares/checkUser.mw');
 
 const userRouter = Router();
 
